@@ -1,9 +1,11 @@
 <html>
 <head>
-<title>Hello World!</title>
+<title>Welcome to my netflix!</title>
 </head>
 <body>
-	<h1>Hello World!</h1>
+	<h1>Please select the following categories!</h1>
+	<h2>1.Action!</h2>
+	<h3>2.Animation!</h3>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
