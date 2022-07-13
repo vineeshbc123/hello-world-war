@@ -3,6 +3,7 @@ pipeline{
     stages{
         stage('checkout'){
             steps{
+                print "${params.string}"
                 sh 'rm -rf hello-world-war'
                 sh 'git clone https://github.com/Srikanthkittane/hello-world-war.git'
             }
