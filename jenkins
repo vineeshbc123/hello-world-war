@@ -1,17 +1,23 @@
 pipeline{
-    agent{label 'newmaven'}
+    agent none
     stages{
-        stage('checkout'){
+        stage('checkout and build'){
+        agent{label'maven'}
             steps{
-                print "${params.string}"
                 sh 'rm -rf hello-world-war'
                 sh 'git clone https://github.com/Srikanthkittane/hello-world-war.git'
-            }
-        }
-        stage('build'){
-            steps{
                 dir('hello-world-war'){
                     sh 'mvn package'
+                }
+            }
+        }
+        stage('publish'){
+        agent{label 'maven'}
+            steps{
+                dir('hello-world-war'){
+                    sh "echo $(BUILD_NUMBER}"
+                    sh 'cp -r target/hello-world-war-1.0.0.war hello-world-war-$(BUILD_NUMBER}.war'
+                    sh 'curl -X PUT -u admin:Devops@123 -T hello-world-war-${BUILD_NUMBER}.war \"http://34.228.24.109:8081/artifactory/maven/hello-world-war-${BUILD_NUMBER}.war\"'
                 }
             }
         }
