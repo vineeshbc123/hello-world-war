@@ -8,6 +8,7 @@
 	<h2>2.Noodels!</h2>
 	<h2>3.Paneer!</h2>
 	<h2>4.Babycorn!</h2>
+	<h2>5.Mushroom!</h2>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
