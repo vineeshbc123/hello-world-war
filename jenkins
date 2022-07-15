@@ -16,7 +16,7 @@ pipeline{
             steps{
                 dir('hello-world-war'){
                     sh "echo ${BUILD_NUMBER}"
-                    sh 'cp -r target/hello-world-war-1.0.0.war hello-world-war-$(BUILD_NUMBER}.war'
+                    sh 'cp -r target/hello-world-war-1.0.0.war hello-world-war-${BUILD_NUMBER}.war'
                     sh 'curl -X PUT -u admin:Devops@123 -T hello-world-war-${BUILD_NUMBER}.war \"http://34.228.24.109:8081/artifactory/maven/hello-world-war-${BUILD_NUMBER}.war\"'
                 }
             }
