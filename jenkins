@@ -21,16 +21,5 @@ pipeline{
                 }
             }
         }
-        stage('deploy'){
-            steps{
-                script{
-                    if(params.Deploy_indicator) {
-                             sh 'sudo cp -r /home/buildlog/workspace/newpipeline/hello-world-war/target/hello-world-war-1.0.0.war /opt/apache-tomcat-9.0.64/webapps/'
-                             sh 'sudo sh /opt/apache-tomcat-9.0.64/bin/shutdown.sh'
-                             sh 'sudo sh /opt/apache-tomcat-9.0.64/bin/startup.sh'
-                     }
-                }
-            }
-        }
     }
 }
