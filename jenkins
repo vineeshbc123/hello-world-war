@@ -21,7 +21,7 @@ pipeline{
                 }
             }
         }
-        stage('deploy') {
+        stages('deploy') {
           parallel {
                 stage('deploy server1') {
                 agent{label "tomcatone"}
