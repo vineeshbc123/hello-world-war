@@ -25,15 +25,21 @@ pipeline{
           parallel {
                 stage('deploy server1') {
                 agent{label "tomcatone"}
+                script{
+                  if(params.Lazy) {
                     steps {
                         sh 'curl -u admin:Devops@123 -O http://34.228.24.109:8081/artifactory/maven/hello-world-war-${BUILD_NUMBER}.war'
                         sh 'sudo cp -r hello-world-war-${BUILD_NUMBER}.war /opt/apache-tomcat-9.0.64/webapps/'
                         sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/shutdown.sh'
                         sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/startup.sh'
                     }
-                }  
+                  }
+                } 
+              }  
                  stage('deploy server2') {
                  agent{label "tomcattwo"}
+                 script{
+                   if(params.Lazy) {
                      steps {
                         sh 'curl -u admin:Devops@123 -O http://34.228.24.109:8081/artifactory/maven/hello-world-war-${BUILD_NUMBER}.war'
                         sh 'sudo cp -r hello-world-war-${BUILD_NUMBER}.war /opt/apache-tomcat-9.0.64/webapps/'
@@ -41,6 +47,8 @@ pipeline{
                         sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/startup.sh'
                     }
                   }
+                }
+              }  
            }
         }
     }
