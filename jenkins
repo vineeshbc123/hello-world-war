@@ -21,9 +21,8 @@ pipeline{
                 }
             }
         }
-        stages('deploy') {
-          script{
-             if(params.Lazy) {
+        stage('deploy') {
+          parallel{
                 stage('deploy server1') {
                 agent{label "tomcatone"}
                     steps {
@@ -33,10 +32,6 @@ pipeline{
                         sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/startup.sh'
                     }
                   }
-                } 
-              }  
-              script{
-                if(params.Lazy) {
                  stage('deploy server2') {
                  agent{label "tomcattwo"}
                      steps {
@@ -46,8 +41,6 @@ pipeline{
                         sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/startup.sh'
                      }
                   }
-                }
-              }  
     }
 }
  
