@@ -1,7 +1,7 @@
 pipeline{
     parameters {
-        booleanParam(name:'Deploy_Server1', defaultValue:true, descripton:'Please select if you need to deploy to Tomcat Server1')
-        booleanParam(name:'Deploy_Server2', defaultValue:true, descripton:'Please select if you need to deploy to Tomcat Server2')
+        booleanParam(name:'Deploy_Server1', defaultValue:true, description:'Please select if you need to deploy to Tomcat Server1')
+        booleanParam(name:'Deploy_Server2', defaultValue:true, description:'Please select if you need to deploy to Tomcat Server2')
     }
     agent none
     stages{
