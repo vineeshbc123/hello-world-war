@@ -12,15 +12,15 @@ pipeline {
         script {
           dir('hello-world-war') {
               sh 'docker build -t tomimage:${BUILD_NUMBER} .'
-              sh 'docker tag tomimage:${BUILD_NUMBER} 052269124616.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}'
+              sh 'docker tag tomimage:${BUILD_NUMBER} srikanthkittane/tomcat1.0:${BUILD_NUMBER}'
           }
         }
       }
     }
     stage ('publish') {
       steps {
-          sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 052269124616.dkr.ecr.us-east-1.amazonaws.com'
-          sh 'docker push 052269124616.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}'
+          sh 'sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u srikanthkittane --password=8800507102'
+          sh 'docker push srikanthkittane/tomcat1.0:${BUILD_NUMBER}'
       }
    }
     stage ('deploy') {
@@ -28,9 +28,9 @@ pipeline {
       steps {
           sh 'docker rm -f mytomcat'
           sh 'sleep 5'
-          sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 052269124616.dkr.ecr.us-east-1.amazonaws.com'
-          sh 'docker pull 052269124616.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}'
-          sh 'docker run -d --name mytomcat -p 8084:8080 052269124616.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}'
+          sh 'sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u srikanthkittane --password=8800507102'
+          sh 'docker pull srikanthkittane/tomcat1.0:${BUILD_NUMBER}'
+          sh 'docker run -d --name mytomcat -p 8084:8080 srikanthkittane/tomcat1.0:${BUILD_NUMBER}'
       }
     }   
  }
