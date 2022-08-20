@@ -4,8 +4,8 @@
 </head>
 <body>
 	<h1>Please select the following categories!</h1>
-	<h2>1.Action</h2>
-	<h2>2.Drama</h2>
+	<h2>1.Drama</h2>
+	<h2>2.Vengful</h2>
 	<h2>3.Horror</h2>
 	<h2>4.Anime</h2>
 	<h2>5.Comedy</h2>
