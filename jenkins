@@ -30,7 +30,7 @@ pipeline {
           sh 'sleep 5'
           sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 052269124616.dkr.ecr.us-east-1.amazonaws.com'
           sh 'docker pull 052269124616.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}'
-          sh 'docker run -d --name mytomcat -p 8084:8080 052269124616.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}:${BUILD_NUMBER}'
+          sh 'docker run -d --name mytomcat -p 8084:8080 052269124616.dkr.ecr.us-east-1.amazonaws.com/tomcat:${BUILD_NUMBER}'
       }
     }   
  }
