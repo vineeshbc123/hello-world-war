@@ -1,60 +1,37 @@
-pipeline{
-    parameters {
-        booleanParam(name:'Deploy_Server1', defaultValue:true, description:'Please select if you need to deploy to Tomcat Server1')
-        booleanParam(name:'Deploy_Server2', defaultValue:true, description:'Please select if you need to deploy to Tomcat Server2')
-    }
-    agent none
-    stages{
-        stage('checkout and build'){
-        agent{label'maven'}
-            steps{
-                sh 'rm -rf hello-world-war'
-                sh 'git clone https://github.com/Srikanthkittane/hello-world-war.git'
-                dir('hello-world-war'){
-                    sh 'mvn package'
-                }
-            }
+pipeline {
+  agent { label 'jenkinsone'}
+  stages { 
+    stage('checkout') {
+      steps {
+          sh 'rm -rf hello-world-war'
+          sh 'git clone '
+      }
+    } 
+    stage ('build') {
+      steps {
+        script {
+          dir('hello-world-war') {
+              sh 'docker build -t tomimage:${BUILD_NUMBER} .'
+              sh 'docker tag tomimage:${BUILD_NUMBER} 076359103690.dkr.ecr.us-west-2.amazonaws.com/tomcat:${BUILD_NUMBER}'
+          }
         }
-        stage('publish'){
-        agent{label 'maven'}
-            steps{
-                dir('hello-world-war'){
-                    sh "echo ${BUILD_NUMBER}"
-                    sh 'cp -r target/hello-world-war-1.0.0.war hello-world-war-${BUILD_NUMBER}.war'
-                    sh 'curl -X PUT -u admin:Devops@123 -T hello-world-war-${BUILD_NUMBER}.war \"http://54.146.219.7:8081/artifactory/maven/hello-world-war-${BUILD_NUMBER}.war\"'
-                }
-            }
-        }
-        stage('deploy') {
-          parallel{
-                stage('deploy server1') {
-                agent{label "tomcatone"}
-                    steps {
-                        script{
-                            if(params.Deploy_Server1) {
-                        sh 'curl -u admin:Devops@123 -O http://54.146.219.7:8081/artifactory/maven/hello-world-war-${BUILD_NUMBER}.war'
-                        sh 'sudo cp -r hello-world-war-${BUILD_NUMBER}.war /opt/apache-tomcat-9.0.64/webapps/'
-                        sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/shutdown.sh'
-                        sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/startup.sh'
-                             }
-                         }    
-                    }
-                  }
-                 stage('deploy server2') {
-                 agent{label "tomcattwo"}
-                     steps {
-                        script{
-                            if(params.Deploy_Server2) {
-                        sh 'curl -u admin:Devops@123 -O http://54.146.219.7:8081/artifactory/maven/hello-world-war-${BUILD_NUMBER}.war'
-                        sh 'sudo cp -r hello-world-war-${BUILD_NUMBER}.war /opt/apache-tomcat-9.0.64/webapps/'
-                        sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/shutdown.sh'
-                        sh 'sudo  sh /opt/apache-tomcat-9.0.64/bin/startup.sh'
-                            }
-                         }   
-                     }
-                  }
-               }
-           }    
+      }
     }
+    stage ('publish') {
+      steps {
+          sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 076359103690.dkr.ecr.us-west-2.amazonaws.com'
+          sh 'docker push 076359103690.dkr.ecr.us-west-2.amazonaws.com/tomcat:${BUILD_NUMBER}'
+      }
+   }
+    stage ('deploy') {
+      agent { label 'jenkinstwo' }
+      steps {
+          sh 'docker rm -f mytomcat'
+          sh 'sleep 5'
+          sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 076359103690.dkr.ecr.us-west-2.amazonaws.com'
+          sh 'docker pull 076359103690.dkr.ecr.us-west-2.amazonaws.com/tomcat:${BUILD_NUMBER}'
+          sh 'docker run -d --name mytomcat -p 8084:8080 076359103690.dkr.ecr.us-west-2.amazonaws.com/tomcat:${BUILD_NUMBER}'
+      }
+    }   
+ }
 }
- 
