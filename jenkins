@@ -19,7 +19,7 @@ pipeline {
     }
     stage ('publish') {
       steps {
-          sh 'sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u srikanthkittane --password=8800507102'
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u srikanthkittane --password=8800507102'
           sh 'docker push srikanthkittane/tomcat1.0:${BUILD_NUMBER}'
       }
    }
@@ -28,7 +28,7 @@ pipeline {
       steps {
           sh 'docker rm -f mytomcat'
           sh 'sleep 5'
-          sh 'sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u srikanthkittane --password=8800507102'
+          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u srikanthkittane --password=8800507102'
           sh 'docker pull srikanthkittane/tomcat1.0:${BUILD_NUMBER}'
           sh 'docker run -d --name mytomcat -p 8084:8080 srikanthkittane/tomcat1.0:${BUILD_NUMBER}'
       }
