@@ -1,14 +1,14 @@
 <html>
 <head>
-<title>Welcome to Netflix!</title>
+<title>Vineesh Here!</title>
 </head>
 <body>
-	<h1>Please select the following categories!</h1>
-	<h2>1.Drama</h2>
-	<h2>2.Vengful</h2>
-	<h2>3.Horror</h2>
-	<h2>4.Anime</h2>
-	<h2>5.Comedy</h2>
+	<h1>Personal details!</h1>
+	<h2>1.linux</h2>
+	<h2>2.Git/h2>
+	<h2>3.script</h2>
+	<h2>4.jenkins</h2>
+	<h2>5.docker</h2>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
