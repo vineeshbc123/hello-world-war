@@ -3,7 +3,7 @@
 <title>Vineesh Here!</title>
 </head>
 <body>
-	<h1>MY Details! shown below</h1>
+	<h1>MY Details! shown below as follows</h1>
 	<h2>Hi All ! This is Vineesh here</h2>
 	<h2>I am from Mandya</h2>
 	<h2>I have completed my BE in Hassan ! I am currently working at TCS</h2>
