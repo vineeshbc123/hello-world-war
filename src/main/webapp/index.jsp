@@ -1,14 +1,13 @@
 <html>
 <head>
-<title>Vineesh Here! Sharath</title>
+<title>Hello visitor!!!- Welcome to sharath's site</title>
 </head>
 <body>
-	<h1>MY Details! shown below as follows</h1>
-	<h2>Hi All ! This is Vineesh here</h2>
-	<h2>I am from Mandya</h2>
-	<h2>I have completed my BE in Hassan ! I am currently working at TCS</h2>
-	<h2>I have a total experience of 3 years</h2>
-	<h2>My hobbies are Travelling, Playing cricket , Gardening etc...</h2>
+	<h1>Below are the details abolut me</h1>
+	<h2>1.Sharath K J</h2>
+	<h2>2.Working in accenture from 3 years</h2>
+	<h2>3.Hobbies: Riding(biker)/Travelling, Photography, Photoshop and playing cricket</h2>
+	<h2>4.Hometown:Hassan Karnataka</h2>
 	<p>
 		It is now
 		<%= new java.util.Date() %></p>
